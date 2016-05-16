@@ -10,7 +10,7 @@ var urls2 = []
 async.eachSeries(urls, function (url, next) {
   request(url, function (e, r, b) {
     if (e) next(e) // handle error
-	if ( !e && r.statusCode == 200 )
+  if ( !e && r.statusCode == 200 )
     {
         var $ = cheerio.load(b);
         $('ul','.page-post').each(function()
@@ -41,9 +41,9 @@ async.eachSeries(urls, function (url, next) {
 
 function onFinished (err) {
   async.eachSeries(urls2, function (url, next) {
-  	console.log(url.nombre)
+    console.log(url.nombre)
   request(url, function (e, r, b) {
-  	if (e) next(e) // handle error
+    if (e) next(e) // handle error
     if ( !e && r.statusCode == 200 )
     {            
         // if(err) return console.error(err);
@@ -57,5 +57,5 @@ function onFinished (err) {
 }
 nada = function ()
 {
-	console.log("Que miras hijo de tu puta madre")
+  console.log("Pasa el pack rufian")
 }

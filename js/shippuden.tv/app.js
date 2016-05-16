@@ -37,16 +37,16 @@ request('http://www.shippuden.tv/online-sub-espanol-capitulos-hd', function ( er
      if(--waiting == 0) callback();
         
 });
-/*
+
 function callback()
 {
 for ( var count = 0 ; count < urls.length ; count ++)
 {
-    
-    request(urls[count].url, function ( err, resp, body) 
+    lel = urls[count].url
+    request(urls[count].url, function ( err, resp, body,lel) 
     {
 
-        
+        console.log(lel)
     //var uri_uri = urls[count].url.toString();
     //var nombre_uri = urls[count].nombre.toString();
     if ( !err && resp.statusCode == 200 )
@@ -60,4 +60,4 @@ for ( var count = 0 ; count < urls.length ; count ++)
     });
 
 }
-}*/
+}

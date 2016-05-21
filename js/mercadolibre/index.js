@@ -1,9 +1,7 @@
 //dependencias
 var request = require('sync-request'),
 	cheerio = require('cheerio'),
-	fs = require('fs'),
-	Futures = require('futures'),
-	sequence = Futures.sequence();
+	fs = require('fs');
 	
 	// parametros 
 	var metodo = "GET",

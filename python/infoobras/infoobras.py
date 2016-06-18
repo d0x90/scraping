@@ -66,15 +66,6 @@ for (lower, upper) in boundaries:
     output = cv2.inRange(img, lower, upper)    
     cv2.imwrite("captcha2.png", output)
     
-image = Image.open('captcha2.png')
-image.load()
-
-
-resuelto = pytesseract.image_to_string(image)
-print "Resultado: " + resuelto
-
-
-
 
 #aplicando OCR a la imagen
 image = Image.open('captcha2.png')

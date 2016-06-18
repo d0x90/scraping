@@ -2,3 +2,7 @@
 [0618/150737:ERROR:process_reader_win.cc(113)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso.  (0xc0000022)
 [0618/150737:ERROR:exception_snapshot_win.cc(57)] thread ID 6848 not found in process
 [0618/150737:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed
+[0618/171822:ERROR:process_info.cc(608)] range at 0xffa14000, size 0x230 fully unreadable
+[0618/171822:ERROR:process_reader_win.cc(113)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso.  (0xc0000022)
+[0618/171822:ERROR:exception_snapshot_win.cc(57)] thread ID 2472 not found in process
+[0618/171822:WARNING:crash_report_exception_handler.cc(60)] ProcessSnapshotWin::InitializeException failed

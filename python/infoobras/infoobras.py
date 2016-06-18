@@ -18,7 +18,7 @@ import pytesseract
 
 
 chromedriver = "C:/Users/Diego Campos/chromedriver_win32/chromedriver.exe"
-url = "http://apps.contraloria.gob.pe/ciudadano/wfm_obras_buscador.aspx"
+url = "https://apps.contraloria.gob.pe/ciudadano/wfm_obras_buscador.aspx"
 driver = webdriver.Chrome(chromedriver)
 
 driver.get(url)
@@ -68,6 +68,8 @@ for (lower, upper) in boundaries:
     
 image = Image.open('captcha2.png')
 image.load()
+
+
 resuelto = pytesseract.image_to_string(image)
 print "Resultado: " + resuelto
 
@@ -79,6 +81,7 @@ image = Image.open('captcha2.png')
 image.load()
 #r, g, b, a = image.split()		#removing the alpha channel
 #image = Image.merge('RGB',(r,g,b))
+
 resuelto = pytesseract.image_to_string(image)
 print resuelto
 #submit

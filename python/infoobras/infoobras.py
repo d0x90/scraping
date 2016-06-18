@@ -1,7 +1,9 @@
 import base64
 import urllib
+import time
+import cv2
+import numpy as np
 from StringIO import StringIO
-
 from bs4 import BeautifulSoup
 from mechanize import Browser
 from selenium.webdriver.common.by import By
@@ -12,6 +14,24 @@ from selenium.webdriver import ActionChains
 from selenium import webdriver
 from PIL import Image
 import pytesseract
+
+img = cv2.imread("captcha.png")
+boundaries = [
+	([0, 100, 0], [255, 255, 255])
+]
+for (lower, upper) in boundaries:
+    # create NumPy arrays from the boundaries
+    lower = np.array(lower, dtype="uint8")
+    upper = np.array(upper, dtype="uint8")
+    
+    output = cv2.inRange(img, lower, upper)    
+    cv2.imwrite("captcha2.png", output)
+    
+image = Image.open('captcha2.png')
+image.load()
+resuelto = pytesseract.image_to_string(image)
+print "Resultado: " + resuelto
+'''
 chromedriver = "C:/Users/Diego Campos/chromedriver_win32/chromedriver.exe"
 url = "http://apps.contraloria.gob.pe/ciudadano/wfm_obras_buscador.aspx"
 driver = webdriver.Chrome(chromedriver)
@@ -43,17 +63,20 @@ left, top = loc['x'], loc['y']
 width, height = size['width'], size['height']
 box = (int(left), int(top), int(left + width), int(top + height))
 
-screenshot = driver.save_screenshot("captcha.png")
-img = Image.open('captcha.png')
+screenshot = driver.save_screenshot("captcha2.png")
+img = Image.open('captcha2.png')
 captcha = img.crop(box)
-captcha.save('captcha.png', 'PNG')
+captcha.save('captcha2.png', 'PNG')
 
 #aplicando OCR a la imagen
-image = Image.open('captcha.png')
-r,g,b,a = image.split()			#removing the alpha channel
-image = Image.merge('RGB',(r,g,b))
+image = Image.open('captcha2.png')
+image.load()
+#r, g, b, a = image.split()		#removing the alpha channel
+#image = Image.merge('RGB',(r,g,b))
 resuelto = pytesseract.image_to_string(image)
-
+print resuelto
 #submit
 driver.find_element_by_xpath("""//*[@id="txtCodCaptcha"]""").send_keys(resuelto)
-
+time.sleep(5)
+'''
+#driver.find_element_by_xpath("""//*[@id="Buscar"]""").click()

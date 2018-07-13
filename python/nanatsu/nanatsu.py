@@ -91,7 +91,7 @@ try:
                 except Exception as exc:
                     print 'Error en el proceso: '+ str(exc)
 
-        logs.write("Capitulo: "+title+", id: "+num+"Descargado completamente")
+        logs.write("Capitulo: "+title+", id: "+str(num)+"Descargado completamente")
         driver.quit()
     logs.close()
 except Exception as e:

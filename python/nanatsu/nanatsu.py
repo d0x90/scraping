@@ -125,7 +125,7 @@ try:
                 #del r
             except Exception as exc:
                 writeMessage('ERROR: URL con problemas: '+ str(url),2)
-                writeMessage('ERROR: Error en la descarga del capitulo'+title+'la pagina: '+str(page)+" desc: "+ str(exc),2)
+                writeMessage('ERROR: Error en la descarga del capitulo: '+title+', en la pagina: '+str(page)+"\n desc: "+ str(exc),2)
                 pass
 
         writeMessage("INFO: Capitulo: "+title+", id: "+str(num)+"Descargado completamente",1)

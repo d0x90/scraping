@@ -1,5 +1,6 @@
-# -*- coding: cp1252 -*-
+# -*- coding: utf-8 -*-
 # The standard library modules
+#  TODO: FALTA VERIFICAR EL PROBLEMA CON EL CAPITULO 62.5
 import os
 import sys
 
@@ -19,127 +20,280 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from fake_useragent import UserAgent
-import re 
+import re
 import sys
 import logging
 from collections import OrderedDict
 
-
-capitulos = [(1038 , "Capítulo 1 — Los 7 pecados capitales"),(1039,"Capítulo 2 — La espada del caballero sagrado"),(1040,"Capítulo 3 — Algo que debo hacer"),(1041,"Capítulo 4 — El pecado del bosque durmiente"),(1044,"Capítulo 5 — Recuerdos en la obscuridad"),(1046,"Capítulo 6 — El caballero sagrado Gilthunder"),(1049,"Capítulo 7 — El prisionero de la obscuridad"),(1054,"Capítulo 8 — El sueño de una joven chica"),(1057,"Capítulo 9 — No puede ser tocado"),(1058,"Capítulo 10 — La malicia invisible"),(1059,"Capítulo 11 — Incluso si fueras a morir"),(1060,"Capítulo 12 — Una batalla confusa"),(1061,"Capítulo 13 — Resolución dedicada"),(1062,"Capítulo 14"),(1063,"Capítulo 15"),(1064,"Capítulo 16"),(10705,"Capítulo 16.5 — Nada se desperdicia"),(1065,"Capítulo 17"),(1066,"Capítulo 18"),(1067,"Capítulo 19"),(1068,"Capítulo 20"),(1069,"Capítulo 21"),(1070,"Capítulo 22"),(1071,"Capítulo 23"),(1072,"Capítulo 24"),(1073,"Capítulo 25"),(10706,"Capítulo 25.5 — Ban el bandido"),(1074,"Capítulo 26"),(1075,"Capítulo 27"),(1076,"Capítulo 28"),(1077,"Capítulo 29"),(1078,"Capítulo 30"),(1079,"Capítulo 31"),(1080,"Capítulo 32"),(1081,"Capítulo 33"),(1111,"Capítulo 34"),(1120,"Capítulo 35"),(1131,"Capítulo 36"),(1132,"Capítulo 37"),(10707,"Capítulo 37.5 — La justicia de una chica"),(1133,"Capítulo 38"),(1134,"Capítulo 39"),(1135,"Capítulo 40"),(1136,"Capítulo 41"),(10708,"Capítulo 41.5 — Extra: la justicia de una chica"),(1137,"Capítulo 42"),(1138,"Capítulo 43"),(1139,"Capítulo 44"),(1140,"Capítulo 45"),(1141,"Capítulo 46"),(1142,"Capítulo 47"),(1143,"Capítulo 48"),(1144,"Capítulo 49"),(1145,"Capítulo 50"),(1146,"Capítulo 51"),(1276,"Capítulo 52"),(1283,"Capítulo 53"),(1453,"Capítulo 54"),(1459,"Capítulo 55"),(1689,"Capítulo 56"),(1690,"Capítulo 57"),(1691,"Capítulo 58"),(1692,"Capítulo 59"),(1693,"Capítulo 60"),(1698,"Capítulo 61"),(1704,"Capítulo 62"),(10709,"Capítulo 62.5 — Su lugar"),(1708,"Capítulo 63"),(1712,"Capítulo 64"),(1717,"Capítulo 65"),(1721,"Capítulo 66"),(1725,"Capítulo 67"),(1729,"Capítulo 68"),(1733,"Capítulo 69"),(1914,"Capítulo 70"),(1915,"Capítulo 71"),(1916,"Capítulo 72"),(1917,"Capítulo 73"),(1955,"Capítulo 74"),(1956,"Capítulo 75"),(1957,"Capítulo 76"),(1958,"Capítulo 77"),(1959,"Capítulo 78"),(1960,"Capítulo 79"),(1961,"Capítulo 80"),(1962,"Capítulo 81"),(1963,"Capítulo 82"),(1964,"Capítulo 83"),(1965,"Capítulo 84"),(1966,"Capítulo 85"),(1967,"Capítulo 86"),(1968,"Capítulo 87"),(1969,"Capítulo 88"),(1970,"Capítulo 89"),(1971,"Capítulo 90"),(2030,"Capítulo 91"),(2031,"Capítulo 92"),(2032,"Capítulo 93"),(2033,"Capítulo 94"),(2034,"Capítulo 95"),(2035,"Capítulo 96"),(2036,"Capítulo 97"),(2037,"Capítulo 98"),(2038,"Capítulo 99"),(2039,"Capítulo 100"),(2040,"Capítulo 101"),(2041,"Capítulo 102"),(2042,"Capítulo 103"),(2043,"Capítulo 104"),(2044,"Capítulo 105"),(2045,"Capítulo 106"),(2046,"Capítulo 107"),(2047,"Capítulo 108"),(2048,"Capítulo 109"),(2049,"Capítulo 110"),(2106,"Capítulo 111"),(2109,"Capítulo 112"),(2112,"Capítulo 113"),(2115,"Capítulo 114"),(2357,"Capítulo 115 — Una vez más en la pesadilla"),(2358,"Capítulo 116 — Tesoro sagrado LostVayne"),(2359,"Capítulo 117 — Los dos reyes hada"),(2360,"Capítulo 118 — Choque en el bosque del rey hada"),(2361,"Capítulo 119 — Los 10 mandamientos comienzan a moverse"),(2362,"Capítulo 120 — Los vampiros de edinburgh parte III"),(2363,"Capítulo 121 — Imprevisible"),(2364,"Capítulo 122 — El ataque de los demonios"),(2365,"Capítulo 123 — Expiación del capitán de los caballeros santos"),(2366,"Capítulo 124 — Lo que la amistad da a luz"),(2367,"Capítulo 125 — Derrotar a los 10 mandamientos"),(2368,"Capítulo 126 — Donde los recuerdos se dirigen"),(2369,"Capítulo 127 — Reunión con la desesperación"),(2370,"Capítulo 128 — La existencia audaz"),(2371,"Capítulo 129 — La tierra sagrada de los druidas"),(2372,"Capítulo 130 — El dolor que penetra suavemente"),(2373,"Capítulo 131 — La promesa de un ser querido"),(2374,"Capítulo 132 — Lo que nos falta"),(2375,"Capítulo 133 — Impaciencia y ansiedad"),(2376,"Capítulo 134 — A ti, que ya no eres mi capitán "),(2377,"Capítulo 135 — Simples saludos"),(2378,"Capítulo 136 — Sembrando el terror"),(2379,"Capítulo 137 — Entre tú y yo"),(2380,"Capítulo 138 — Batalla con la oscuridad"),(2381,"Capítulo 139 — Cuéntame sobre tu pasado"),(2382,"Capítulo 140 — El ladrón y el niño"),(2383,"Capítulo 141 — Padre e hijo"),(2384,"Capítulo 142 — Donde hay amor"),(2385,"Capítulo 143 — Grito de la guardiana sagrada"),(2386,"Capítulo 144 — El hombre de la codicia"),(2387,"Capítulo 145 — Preciosa alma"),(2388,"Capítulo 146 — Corazón al desnudo"),(2389,"Capítulo 147 — Adiós, mi amado ladrón"),(2390,"Capítulo 148 — Muerte en la persecución"),(2391,"Capítulo 149 — El juego de garan"),(2392,"Capítulo 150 — Poder mágico de garan"),(2393,"Capítulo 151 — El maestro del sol"),(2394,"Capítulo 152 — Atraídos por la luz de la vela"),(2395,"Capítulo 153 — La confesión de Melody"),(2396,"Capítulo 154 — El demonio sonríe"),(2397,"Capítulo 155 — El laberinto de trampas mortales"),(2398,"Capítulo 156 — Desafió de exploración del laberinto"),(2399,"Capítulo 157 — Caótica danza de los desafíos"),(2400,"Capítulo 158 — Los héroes de revelry"),(2401,"Capítulo 159 — No hay necesidad de palabras"),(2402,"Capítulo 160 — Vamos! atravesemoslo!"),(2403,"Capítulo 161 — El legendario"),(2404,"Capítulo 162 — Cuál será el emparejamiento del destino"),(2405,"Capítulo 163 — La princesa y la guardiana sagrada"),(2406,"Capítulo 164 — Aquellos que nunca se rendirán"),(2407,"Capítulo 165 — La pareja dispareja"),(2408,"Capítulo 166 — Fruta extraña"),(2409,"Capítulo 167 — Lo precioso en ti"),(2410,"Capítulo 168 — El plan de exterminación a los diez mandamientos"),(2411,"Capítulo 169 — El legendario caballero sagrado mas débil"),(2412,"Capítulo 170 — Para quien brilla esa luz"),(2413,"Capítulo 171 — El momento ha llegado"),(2414,"Capítulo 172 — A mis antiguos amigos"),(2415,"Capítulo 173 — Desciende la oscuridad"),(2416,"Capítulo 174 — Meliodas vs los diez mandamientos"),(2417,"Capítulo 175 — A mi querido Meliodas"),(2418,"Capítulo 176 — Relato de la oscuridad"),(2419,"Capítulo 177 — Lo que puedo darte"),(2420,"Capítulo 178 — Britannia oscura"),(2421,"Capítulo 179 — En busca de esperanza"),(2422,"Capítulo 180 — El caballero errante"),(2423,"Capítulo 181 — Caballero sagrado Zaratras"),(2424,"Capítulo 182 — Calidez incondicional"),(2425,"Capítulo 183 — Zona peligrosa"),(2426,"Capítulo 184 — Choque de titanes"),(2428,"Capítulo 184.5 — Pecados de vacaciones"),(2429,"Capítulo 185 — Orgullo vs caridad"),(2430,"Capítulo 186 — Batalla por la defensa de liones"),(2431,"Capítulo 187 — Los malvados perecerán"),(2432,"Capítulo 188 — La espada y el alma para salvar a los amigos de uno"),(2433,"Capítulo 189 — El héroe se levanta"),(2434,"Capítulo 190 — Festín del demonio"),(2435,"Capítulo 191 — La mujer insaciable"),(2436,"Capítulo 192 — La espada y el alma para salvar a un amigo"),(2437,"Capítulo 193 — La estrategia del capitán de los caballeros sagrados"),(2438,"Capítulo 194 — Una cruel esperanza"),(2439,"Capítulo 195 — La batalla por la defensa de liones concluye"),(2440,"Capítulo 196 — Siempre y cuando tú estés aquí"),(2441,"Capítulo 197 — Respuesta"),(2442,"Capítulo 198 — La gigante y el hada"),(2443,"Capítulo 199 — Aquellos con luz"),(2444,"Capítulo 200 — Memorias de la guerra santa"),(2445,"Capítulo 201 — Compañeros de batalla"),(9367,"Capítulo 201.1 — Una manera tierna de disipar la magia"),(9368,"Capítulo 201.2 — Lo que quiero decirte"),(9369,"Capítulo 201.3 — Reconstruccion del sombrero de jabali"),(9370,"Capítulo 201.4 — El compromiso maldito"),(9371,"Capítulo 201.5 — Lucha. el gran capitan!"),(11160,"Capítulo 201.6 — Lo que quiero decirte "),(11161,"Capítulo 201.7 — Reconstrucción del boar hat "),(11162,"Capítulo 201.8 — El compromiso maldito "),(11163,"Capítulo 201.9 — ¡Lucha, el gran capitán! "),(4055,"Capítulo 202 — El elenco de la guerra santa"),(4056,"Capítulo 203 — El plan de Ryudoshel"),(4057,"Capítulo 204 — Que haya luz"),(4058,"Capítulo 205 — Los 10 mandamientos vs los 4 arcángeles"),(4059,"Capítulo 206 — La bestia ruge"),(4060,"Capítulo 207 — Indura, bestias de la destrucción"),(4226,"Capítulo 208 — Elizabeth vs Indra"),(4227,"Capítulo 209 — Explicame estos sentimientos"),(4280,"Capítulo 210 — Turbulencia de emociones"),(9372,"Capítulo 211 — Aquellos que dicen Adiós"),(11164,"Capítulo 211.5 — El muñeco que ansiava amor "),(10520,"Capítulo 212 — Un regalo"),(10682,"Capítulo 213 — Es esto a lo que llamamos amor"),(10710,"Capítulo 214 — No logro llegar a ti desde aquél día"),(10723,"Capítulo 215 — Zeldris el verdugo"),(10724,"Capítulo 216 — Adelante, hacia donde están los pecados"),(10762,"Capítulo 217 — El lugar del corazón"),(10778,"Capítulo 218 — Nos encontramos de nuevo"),(10789,"Capítulo 219 — El descanso de los héroes"),(11165,"Capítulo 220 — El banquete de los heroes "),(11180,"Capítulo 221 — Solo sé sincero"),(11197,"Capítulo 222 — Los amantes malditos"),(11221,"Capítulo 223 — Amantes desconcertados"),(11230,"Capítulo 224 — Este es nuestro modo de vida"),(11250,"Capítulo 225 — Hacia la ciudad en ruinas"),(11263,"Capítulo 226 — Salvaje"),(11276,"Capítulo 227 — Choque! choque! choque!"),(11295,"Capítulo 228 — La diosa y la doncella sagrada"),(11692,"Capítulo 229 — El amor es la fuerza de la doncella"),(11991,"Capítulo 230 — Los guerreros elegidos"),(11992,"Capítulo 231 — Orgullo vs Ira"),(11993,"Capítulo 232 — El todo poderoso vs el más grande"),(12014,"Capítulo 233 — Daño"),(12050,"Capítulo 234 — Puerta a lo desconocido"),(12055,"Capítulo 235 — Una nueva amenaza"),(12152,"Capítulo 236 — Encuentro con la desesperación"),(12176,"Capítulo 237 — El demonio pacificador"),(12177,"Capítulo 238 — Creando una apertura"),(12279,"Capítulo 239 — A nuestro capitán"),(12293,"Capítulo 240 — Los cimientos para el futuro"),(12325,"Capítulo 241 — Alma hereditaria"),(12326,"Capítulo 242 — El final de los 7 pecados capitales"),(12572,"Capítulo 243 — Y así, él se embarca en su viaje"),(12593,"Capítulo 244 — La princesa elegida"),(12615,"Capítulo 245 — Marcha de los santos"),(12719,"Capítulo 246 — Un encuentro casual"),(12720,"Capítulo 247 — Recuperación"),(12981,"Capítulo 248 — Nuestra negociación"),(12982,"Capítulo 249 — Trato"),(13012,"Capítulo 250 — Composicion"),(13025,"Capítulo 251 — El pacto de la guerra santa"),(13058,"Capítulo 252 — Destino"),(13100,"Capítulo 253 — Gracia perdida"),(13268,"Capítulo 254 — Camelott En Desesperacion"),(13269,"Capítulo 255 — Hijo de la esperanza"),(13344,"Capítulo 256 — La perforadora espada sagrada"),(13398,"Capítulo 257 — Inicia el contrataque"),(13399,"Capítulo 258 — La guerra santa empieza"),(13400,"Capítulo 259 — Britannia devastada por la guerra"),(13429,"Capítulo 260 — Lo que quiero decirte"),(13438,"Capítulo 261 — Un gato perdido"),(14042,"Capítulo 262 — Aquél retorcido por la obscuridad"),(14109,"Capítulo 263 — Estallidos en la oscuridad"),(14189,"Capítulo 264 — El Hombre deformado, retorcido y roto"),(14748,"Capítulo 265 — Amor devastador"),(15178,"Capítulo 266 — El perseguido y el perseguidor"),(15364,"Capítulo 267 — Desde los cielos"),(15365,"Capítulo 268 — Desde el purgatorio"),(15564,"Capítulo 269 — Vida del purgatorio"),(15807,"Capítulo 270 — Encuentro con lo desconocido"),(16064,"Capítulo 271 — Sentimientos sinceros"),(16107,"Capítulo 272 — La eterna batalla"),(16666,"Capítulo 273 — Las victimas de la guerra santa"),(17053,"Capítulo 274 — El ángel caído de la desesperación, Mael")]
+capitulos = [(1038, "CapÃ­tulo 1 â€” Los 7 pecados capitales"), (1039, "CapÃ­tulo 2 â€” La espada del caballero sagrado"),
+             (1040, "CapÃ­tulo 3 â€” Algo que debo hacer"), (1041, "CapÃ­tulo 4 â€” El pecado del bosque durmiente"),
+             (1044, "CapÃ­tulo 5 â€” Recuerdos en la obscuridad"), (1046, "CapÃ­tulo 6 â€” El caballero sagrado Gilthunder"),
+             (1049, "CapÃ­tulo 7 â€” El prisionero de la obscuridad"), (1054, "CapÃ­tulo 8 â€” El sueÃ±o de una joven chica"),
+             (1057, "CapÃ­tulo 9 â€” No puede ser tocado"), (1058, "CapÃ­tulo 10 â€” La malicia invisible"),
+             (1059, "CapÃ­tulo 11 â€” Incluso si fueras a morir"), (1060, "CapÃ­tulo 12 â€” Una batalla confusa"),
+             (1061, "CapÃ­tulo 13 â€” ResoluciÃ³n dedicada"), (1062, "CapÃ­tulo 14"), (1063, "CapÃ­tulo 15"),
+             (1064, "CapÃ­tulo 16"), (10705, "CapÃ­tulo 16.5 â€” Nada se desperdicia"), (1065, "CapÃ­tulo 17"),
+             (1066, "CapÃ­tulo 18"), (1067, "CapÃ­tulo 19"), (1068, "CapÃ­tulo 20"), (1069, "CapÃ­tulo 21"),
+             (1070, "CapÃ­tulo 22"), (1071, "CapÃ­tulo 23"), (1072, "CapÃ­tulo 24"), (1073, "CapÃ­tulo 25"),
+             (10706, "CapÃ­tulo 25.5 â€” Ban el bandido"), (1074, "CapÃ­tulo 26"), (1075, "CapÃ­tulo 27"),
+             (1076, "CapÃ­tulo 28"), (1077, "CapÃ­tulo 29"), (1078, "CapÃ­tulo 30"), (1079, "CapÃ­tulo 31"),
+             (1080, "CapÃ­tulo 32"), (1081, "CapÃ­tulo 33"), (1111, "CapÃ­tulo 34"), (1120, "CapÃ­tulo 35"),
+             (1131, "CapÃ­tulo 36"), (1132, "CapÃ­tulo 37"), (10707, "CapÃ­tulo 37.5 â€” La justicia de una chica"),
+             (1133, "CapÃ­tulo 38"), (1134, "CapÃ­tulo 39"), (1135, "CapÃ­tulo 40"), (1136, "CapÃ­tulo 41"),
+             (10708, "CapÃ­tulo 41.5 â€” Extra: la justicia de una chica"), (1137, "CapÃ­tulo 42"), (1138, "CapÃ­tulo 43"),
+             (1139, "CapÃ­tulo 44"), (1140, "CapÃ­tulo 45"), (1141, "CapÃ­tulo 46"), (1142, "CapÃ­tulo 47"),
+             (1143, "CapÃ­tulo 48"), (1144, "CapÃ­tulo 49"), (1145, "CapÃ­tulo 50"), (1146, "CapÃ­tulo 51"),
+             (1276, "CapÃ­tulo 52"), (1283, "CapÃ­tulo 53"), (1453, "CapÃ­tulo 54"), (1459, "CapÃ­tulo 55"),
+             (1689, "CapÃ­tulo 56"), (1690, "CapÃ­tulo 57"), (1691, "CapÃ­tulo 58"), (1692, "CapÃ­tulo 59"),
+             (1693, "CapÃ­tulo 60"), (1698, "CapÃ­tulo 61"), (1704, "CapÃ­tulo 62"), (10709, "CapÃ­tulo 62.5 â€” Su lugar"),
+             (1708, "CapÃ­tulo 63"), (1712, "CapÃ­tulo 64"), (1717, "CapÃ­tulo 65"), (1721, "CapÃ­tulo 66"),
+             (1725, "CapÃ­tulo 67"), (1729, "CapÃ­tulo 68"), (1733, "CapÃ­tulo 69"), (1914, "CapÃ­tulo 70"),
+             (1915, "CapÃ­tulo 71"), (1916, "CapÃ­tulo 72"), (1917, "CapÃ­tulo 73"), (1955, "CapÃ­tulo 74"),
+             (1956, "CapÃ­tulo 75"), (1957, "CapÃ­tulo 76"), (1958, "CapÃ­tulo 77"), (1959, "CapÃ­tulo 78"),
+             (1960, "CapÃ­tulo 79"), (1961, "CapÃ­tulo 80"), (1962, "CapÃ­tulo 81"), (1963, "CapÃ­tulo 82"),
+             (1964, "CapÃ­tulo 83"), (1965, "CapÃ­tulo 84"), (1966, "CapÃ­tulo 85"), (1967, "CapÃ­tulo 86"),
+             (1968, "CapÃ­tulo 87"), (1969, "CapÃ­tulo 88"), (1970, "CapÃ­tulo 89"), (1971, "CapÃ­tulo 90"),
+             (2030, "CapÃ­tulo 91"), (2031, "CapÃ­tulo 92"), (2032, "CapÃ­tulo 93"), (2033, "CapÃ­tulo 94"),
+             (2034, "CapÃ­tulo 95"), (2035, "CapÃ­tulo 96"), (2036, "CapÃ­tulo 97"), (2037, "CapÃ­tulo 98"),
+             (2038, "CapÃ­tulo 99"), (2039, "CapÃ­tulo 100"), (2040, "CapÃ­tulo 101"), (2041, "CapÃ­tulo 102"),
+             (2042, "CapÃ­tulo 103"), (2043, "CapÃ­tulo 104"), (2044, "CapÃ­tulo 105"), (2045, "CapÃ­tulo 106"),
+             (2046, "CapÃ­tulo 107"), (2047, "CapÃ­tulo 108"), (2048, "CapÃ­tulo 109"), (2049, "CapÃ­tulo 110"),
+             (2106, "CapÃ­tulo 111"), (2109, "CapÃ­tulo 112"), (2112, "CapÃ­tulo 113"), (2115, "CapÃ­tulo 114"),
+             (2357, "CapÃ­tulo 115 â€” Una vez mÃ¡s en la pesadilla"), (2358, "CapÃ­tulo 116 â€” Tesoro sagrado LostVayne"),
+             (2359, "CapÃ­tulo 117 â€” Los dos reyes hada"), (2360, "CapÃ­tulo 118 â€” Choque en el bosque del rey hada"),
+             (2361, "CapÃ­tulo 119 â€” Los 10 mandamientos comienzan a moverse"),
+             (2362, "CapÃ­tulo 120 â€” Los vampiros de edinburgh parte III"), (2363, "CapÃ­tulo 121 â€” Imprevisible"),
+             (2364, "CapÃ­tulo 122 â€” El ataque de los demonios"),
+             (2365, "CapÃ­tulo 123 â€” ExpiaciÃ³n del capitÃ¡n de los caballeros santos"),
+             (2366, "CapÃ­tulo 124 â€” Lo que la amistad da a luz"),
+             (2367, "CapÃ­tulo 125 â€” Derrotar a los 10 mandamientos"),
+             (2368, "CapÃ­tulo 126 â€” Donde los recuerdos se dirigen"),
+             (2369, "CapÃ­tulo 127 â€” ReuniÃ³n con la desesperaciÃ³n"), (2370, "CapÃ­tulo 128 â€” La existencia audaz"),
+             (2371, "CapÃ­tulo 129 â€” La tierra sagrada de los druidas"),
+             (2372, "CapÃ­tulo 130 â€” El dolor que penetra suavemente"),
+             (2373, "CapÃ­tulo 131 â€” La promesa de un ser querido"), (2374, "CapÃ­tulo 132 â€” Lo que nos falta"),
+             (2375, "CapÃ­tulo 133 â€” Impaciencia y ansiedad"), (2376, "CapÃ­tulo 134 â€” A ti, que ya no eres mi capitÃ¡n "),
+             (2377, "CapÃ­tulo 135 â€” Simples saludos"), (2378, "CapÃ­tulo 136 â€” Sembrando el terror"),
+             (2379, "CapÃ­tulo 137 â€” Entre tÃº y yo"), (2380, "CapÃ­tulo 138 â€” Batalla con la oscuridad"),
+             (2381, "CapÃ­tulo 139 â€” CuÃ©ntame sobre tu pasado"), (2382, "CapÃ­tulo 140 â€” El ladrÃ³n y el niÃ±o"),
+             (2383, "CapÃ­tulo 141 â€” Padre e hijo"), (2384, "CapÃ­tulo 142 â€” Donde hay amor"),
+             (2385, "CapÃ­tulo 143 â€” Grito de la guardiana sagrada"), (2386, "CapÃ­tulo 144 â€” El hombre de la codicia"),
+             (2387, "CapÃ­tulo 145 â€” Preciosa alma"), (2388, "CapÃ­tulo 146 â€” CorazÃ³n al desnudo"),
+             (2389, "CapÃ­tulo 147 â€” AdiÃ³s, mi amado ladrÃ³n"), (2390, "CapÃ­tulo 148 â€” Muerte en la persecuciÃ³n"),
+             (2391, "CapÃ­tulo 149 â€” El juego de garan"), (2392, "CapÃ­tulo 150 â€” Poder mÃ¡gico de garan"),
+             (2393, "CapÃ­tulo 151 â€” El maestro del sol"), (2394, "CapÃ­tulo 152 â€” AtraÃ­dos por la luz de la vela"),
+             (2395, "CapÃ­tulo 153 â€” La confesiÃ³n de Melody"), (2396, "CapÃ­tulo 154 â€” El demonio sonrÃ­e"),
+             (2397, "CapÃ­tulo 155 â€” El laberinto de trampas mortales"),
+             (2398, "CapÃ­tulo 156 â€” DesafiÃ³ de exploraciÃ³n del laberinto"),
+             (2399, "CapÃ­tulo 157 â€” CaÃ³tica danza de los desafÃ­os"), (2400, "CapÃ­tulo 158 â€” Los hÃ©roes de revelry"),
+             (2401, "CapÃ­tulo 159 â€” No hay necesidad de palabras"), (2402, "CapÃ­tulo 160 â€” Vamos! atravesemoslo!"),
+             (2403, "CapÃ­tulo 161 â€” El legendario"), (2404, "CapÃ­tulo 162 â€” CuÃ¡l serÃ¡ el emparejamiento del destino"),
+             (2405, "CapÃ­tulo 163 â€” La princesa y la guardiana sagrada"),
+             (2406, "CapÃ­tulo 164 â€” Aquellos que nunca se rendirÃ¡n"), (2407, "CapÃ­tulo 165 â€” La pareja dispareja"),
+             (2408, "CapÃ­tulo 166 â€” Fruta extraÃ±a"), (2409, "CapÃ­tulo 167 â€” Lo precioso en ti"),
+             (2410, "CapÃ­tulo 168 â€” El plan de exterminaciÃ³n a los diez mandamientos"),
+             (2411, "CapÃ­tulo 169 â€” El legendario caballero sagrado mas dÃ©bil"),
+             (2412, "CapÃ­tulo 170 â€” Para quien brilla esa luz"), (2413, "CapÃ­tulo 171 â€” El momento ha llegado"),
+             (2414, "CapÃ­tulo 172 â€” A mis antiguos amigos"), (2415, "CapÃ­tulo 173 â€” Desciende la oscuridad"),
+             (2416, "CapÃ­tulo 174 â€” Meliodas vs los diez mandamientos"), (2417, "CapÃ­tulo 175 â€” A mi querido Meliodas"),
+             (2418, "CapÃ­tulo 176 â€” Relato de la oscuridad"), (2419, "CapÃ­tulo 177 â€” Lo que puedo darte"),
+             (2420, "CapÃ­tulo 178 â€” Britannia oscura"), (2421, "CapÃ­tulo 179 â€” En busca de esperanza"),
+             (2422, "CapÃ­tulo 180 â€” El caballero errante"), (2423, "CapÃ­tulo 181 â€” Caballero sagrado Zaratras"),
+             (2424, "CapÃ­tulo 182 â€” Calidez incondicional"), (2425, "CapÃ­tulo 183 â€” Zona peligrosa"),
+             (2426, "CapÃ­tulo 184 â€” Choque de titanes"), (2428, "CapÃ­tulo 184.5 â€” Pecados de vacaciones"),
+             (2429, "CapÃ­tulo 185 â€” Orgullo vs caridad"), (2430, "CapÃ­tulo 186 â€” Batalla por la defensa de liones"),
+             (2431, "CapÃ­tulo 187 â€” Los malvados perecerÃ¡n"),
+             (2432, "CapÃ­tulo 188 â€” La espada y el alma para salvar a los amigos de uno"),
+             (2433, "CapÃ­tulo 189 â€” El hÃ©roe se levanta"), (2434, "CapÃ­tulo 190 â€” FestÃ­n del demonio"),
+             (2435, "CapÃ­tulo 191 â€” La mujer insaciable"),
+             (2436, "CapÃ­tulo 192 â€” La espada y el alma para salvar a un amigo"),
+             (2437, "CapÃ­tulo 193 â€” La estrategia del capitÃ¡n de los caballeros sagrados"),
+             (2438, "CapÃ­tulo 194 â€” Una cruel esperanza"),
+             (2439, "CapÃ­tulo 195 â€” La batalla por la defensa de liones concluye"),
+             (2440, "CapÃ­tulo 196 â€” Siempre y cuando tÃº estÃ©s aquÃ­"), (2441, "CapÃ­tulo 197 â€” Respuesta"),
+             (2442, "CapÃ­tulo 198 â€” La gigante y el hada"), (2443, "CapÃ­tulo 199 â€” Aquellos con luz"),
+             (2444, "CapÃ­tulo 200 â€” Memorias de la guerra santa"), (2445, "CapÃ­tulo 201 â€” CompaÃ±eros de batalla"),
+             (9367, "CapÃ­tulo 201.1 â€” Una manera tierna de disipar la magia"),
+             (9368, "CapÃ­tulo 201.2 â€” Lo que quiero decirte"),
+             (9369, "CapÃ­tulo 201.3 â€” Reconstruccion del sombrero de jabali"),
+             (9370, "CapÃ­tulo 201.4 â€” El compromiso maldito"), (9371, "CapÃ­tulo 201.5 â€” Lucha. el gran capitan!"),
+             (11160, "CapÃ­tulo 201.6 â€” Lo que quiero decirte "),
+             (11161, "CapÃ­tulo 201.7 â€” ReconstrucciÃ³n del boar hat "),
+             (11162, "CapÃ­tulo 201.8 â€” El compromiso maldito "), (11163, "CapÃ­tulo 201.9 â€” Â¡Lucha, el gran capitÃ¡n! "),
+             (4055, "CapÃ­tulo 202 â€” El elenco de la guerra santa"), (4056, "CapÃ­tulo 203 â€” El plan de Ryudoshel"),
+             (4057, "CapÃ­tulo 204 â€” Que haya luz"), (4058, "CapÃ­tulo 205 â€” Los 10 mandamientos vs los 4 arcÃ¡ngeles"),
+             (4059, "CapÃ­tulo 206 â€” La bestia ruge"), (4060, "CapÃ­tulo 207 â€” Indura, bestias de la destrucciÃ³n"),
+             (4226, "CapÃ­tulo 208 â€” Elizabeth vs Indra"), (4227, "CapÃ­tulo 209 â€” Explicame estos sentimientos"),
+             (4280, "CapÃ­tulo 210 â€” Turbulencia de emociones"), (9372, "CapÃ­tulo 211 â€” Aquellos que dicen AdiÃ³s"),
+             (11164, "CapÃ­tulo 211.5 â€” El muÃ±eco que ansiava amor "), (10520, "CapÃ­tulo 212 â€” Un regalo"),
+             (10682, "CapÃ­tulo 213 â€” Es esto a lo que llamamos amor"),
+             (10710, "CapÃ­tulo 214 â€” No logro llegar a ti desde aquÃ©l dÃ­a"),
+             (10723, "CapÃ­tulo 215 â€” Zeldris el verdugo"),
+             (10724, "CapÃ­tulo 216 â€” Adelante, hacia donde estÃ¡n los pecados"),
+             (10762, "CapÃ­tulo 217 â€” El lugar del corazÃ³n"), (10778, "CapÃ­tulo 218 â€” Nos encontramos de nuevo"),
+             (10789, "CapÃ­tulo 219 â€” El descanso de los hÃ©roes"), (11165, "CapÃ­tulo 220 â€” El banquete de los heroes "),
+             (11180, "CapÃ­tulo 221 â€” Solo sÃ© sincero"), (11197, "CapÃ­tulo 222 â€” Los amantes malditos"),
+             (11221, "CapÃ­tulo 223 â€” Amantes desconcertados"), (11230, "CapÃ­tulo 224 â€” Este es nuestro modo de vida"),
+             (11250, "CapÃ­tulo 225 â€” Hacia la ciudad en ruinas"), (11263, "CapÃ­tulo 226 â€” Salvaje"),
+             (11276, "CapÃ­tulo 227 â€” Choque! choque! choque!"),
+             (11295, "CapÃ­tulo 228 â€” La diosa y la doncella sagrada"),
+             (11692, "CapÃ­tulo 229 â€” El amor es la fuerza de la doncella"),
+             (11991, "CapÃ­tulo 230 â€” Los guerreros elegidos"), (11992, "CapÃ­tulo 231 â€” Orgullo vs Ira"),
+             (11993, "CapÃ­tulo 232 â€” El todo poderoso vs el mÃ¡s grande"), (12014, "CapÃ­tulo 233 â€” DaÃ±o"),
+             (12050, "CapÃ­tulo 234 â€” Puerta a lo desconocido"), (12055, "CapÃ­tulo 235 â€” Una nueva amenaza"),
+             (12152, "CapÃ­tulo 236 â€” Encuentro con la desesperaciÃ³n"), (12176, "CapÃ­tulo 237 â€” El demonio pacificador"),
+             (12177, "CapÃ­tulo 238 â€” Creando una apertura"), (12279, "CapÃ­tulo 239 â€” A nuestro capitÃ¡n"),
+             (12293, "CapÃ­tulo 240 â€” Los cimientos para el futuro"), (12325, "CapÃ­tulo 241 â€” Alma hereditaria"),
+             (12326, "CapÃ­tulo 242 â€” El final de los 7 pecados capitales"),
+             (12572, "CapÃ­tulo 243 â€” Y asÃ­, Ã©l se embarca en su viaje"), (12593, "CapÃ­tulo 244 â€” La princesa elegida"),
+             (12615, "CapÃ­tulo 245 â€” Marcha de los santos"), (12719, "CapÃ­tulo 246 â€” Un encuentro casual"),
+             (12720, "CapÃ­tulo 247 â€” RecuperaciÃ³n"), (12981, "CapÃ­tulo 248 â€” Nuestra negociaciÃ³n"),
+             (12982, "CapÃ­tulo 249 â€” Trato"), (13012, "CapÃ­tulo 250 â€” Composicion"),
+             (13025, "CapÃ­tulo 251 â€” El pacto de la guerra santa"), (13058, "CapÃ­tulo 252 â€” Destino"),
+             (13100, "CapÃ­tulo 253 â€” Gracia perdida"), (13268, "CapÃ­tulo 254 â€” Camelott En Desesperacion"),
+             (13269, "CapÃ­tulo 255 â€” Hijo de la esperanza"), (13344, "CapÃ­tulo 256 â€” La perforadora espada sagrada"),
+             (13398, "CapÃ­tulo 257 â€” Inicia el contrataque"), (13399, "CapÃ­tulo 258 â€” La guerra santa empieza"),
+             (13400, "CapÃ­tulo 259 â€” Britannia devastada por la guerra"),
+             (13429, "CapÃ­tulo 260 â€” Lo que quiero decirte"), (13438, "CapÃ­tulo 261 â€” Un gato perdido"),
+             (14042, "CapÃ­tulo 262 â€” AquÃ©l retorcido por la obscuridad"),
+             (14109, "CapÃ­tulo 263 â€” Estallidos en la oscuridad"),
+             (14189, "CapÃ­tulo 264 â€” El Hombre deformado, retorcido y roto"), (14748, "CapÃ­tulo 265 â€” Amor devastador"),
+             (15178, "CapÃ­tulo 266 â€” El perseguido y el perseguidor"), (15364, "CapÃ­tulo 267 â€” Desde los cielos"),
+             (15365, "CapÃ­tulo 268 â€” Desde el purgatorio"), (15564, "CapÃ­tulo 269 â€” Vida del purgatorio"),
+             (15807, "CapÃ­tulo 270 â€” Encuentro con lo desconocido"), (16064, "CapÃ­tulo 271 â€” Sentimientos sinceros"),
+             (16107, "CapÃ­tulo 272 â€” La eterna batalla"), (16666, "CapÃ­tulo 273 â€” Las victimas de la guerra santa"),
+             (17053, "CapÃ­tulo 274 â€” El Ã¡ngel caÃ­do de la desesperaciÃ³n, Mael")]
 capitulosPorDescargar = []
 
 WINDOW_SIZE = "1400,600"
 options = Options()
-#options.add_argument("window-size=1400,600")
-options.add_argument("--headless")  
+# options.add_argument("window-size=1400,600")
+options.add_argument("--headless")
 options.add_argument("--window-size=%s" % WINDOW_SIZE)
 ua = UserAgent()
 a = ua.random
 user_agent = ua.random
 print(user_agent)
-options.add_argument('user-agent='+user_agent)
+options.add_argument('user-agent=' + user_agent)
 capitulos = OrderedDict(capitulos)
-#print capitulos
+# print capitulos
 
 
+basedir = "nanatsu/logs/"
+logs_basedir = "nanatsu/logs/"
+logs = open(logs_basedir + "info.logs", "a+")
+error_logs = open(logs_basedir + "error.logs", "a+")
+descargados = open(basedir + "downloaded.txt", "a+")
 
-basedir = "nanatsu/"
-logs = open(basedir+"info.logs","a+")
-error_logs = open(basedir+"error.logs","a+")
-descargados = open(basedir+"downloaded.txt","a+")
 
-
-#Imprime en pantalla y escribe en el archivo logs
-def writeMessage(msg,level):
-    print msg+"\n"
+# Imprime en pantalla y escribe en el archivo logs
+def writeMessage(msg, level):
+    print msg + "\n"
     try:
         if level == 1:
-            logs.write(msg+"\n")
+            logs.write(msg + "\n")
         else:
-            error_logs.write(msg+"\n")
-    except Exception as e :
+            error_logs.write(msg + "\n")
+    except Exception as e:
         print str(e)
+
 
 def checkIfDownloaded(num):
     try:
-        with open(basedir+"/downloaded.txt",'r') as descargados:
+        with open(basedir + "downloaded.txt", 'r') as descargados:
             for cap in descargados:
                 if int(num) == int(cap):
-                    writeMessage("INFO: Capitulo ya descargado: "+str(num),1)
-                    return True 
+                    writeMessage("INFO: Capitulo ya descargado: " + str(num), 1)
+                    return True
         return False
     except Exception as e:
-        writeMessage(str(e))
+        writeMessage(str(e),2)
         pass
+
+
 try:
-    #capitulos = removeDownloaded(capitulos)
-    for num,title in capitulos.items():
+    # capitulos = removeDownloaded(capitulos)
+    for num, title in capitulos.items():
         if checkIfDownloaded(num):
             continue
-        writeMessage('INFO: Descargando Capitulo: '+title,1)
+        writeMessage('INFO: Descargando Capitulo: ' + title, 1)
         driver = webdriver.Chrome(chrome_options=options)
-        driver.get('https://manga-mx.com/manga/nanatsu-no-taizai/'+str(num)+'/p1')
-        WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.ID, "m_img")))
-        #waits till the element with the specific id appears
-        src = driver.page_source # gets the html source of the page
-        #print src
-        parser = BeautifulSoup(src,"lxml") # initialize the parser and parse the source "src"
+        driver.get('https://manga-mx.com/manga/nanatsu-no-taizai/' + str(num) + '/p1')
+        try:
+            success = WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.ID, "m_img")))
+            if success:
+                # waits till the element with the specific id appears
+                src = driver.page_source  # gets the html source of the page
+                # print src
+                parser = BeautifulSoup(src, "lxml")  # initialize the parser and parse the source "src"
 
-        #list_of_attributes = {"id" : "nums"} # A list of attributes that you want to check in a tag
-        #tag = parser.findAll('select',attrs=list_of_attributes) # Get the video tag from the source
-        tag = parser.find(id="nums").findAll('option')
-        mylist  = set()
-        mylist.add(1)
-        for t in tag:
-            number = re.search("<option.*>(\d+)</option>",str(t)).group(1)
-            if number is not None:
-                mylist.add(int(number))
+                # list_of_attributes = {"id" : "nums"} # A list of attributes that you want to check in a tag
+                # tag = parser.findAll('select',attrs=list_of_attributes) # Get the video tag from the source
+                tag = parser.find(id="nums").findAll('option')
+                mylist = set()
+                mylist.add(1)
+                for t in tag:
+                    number = re.search("<option.*>(\d+)</option>", str(t)).group(1)
+                    if number is not None:
+                        mylist.add(int(number))
 
-        #mylist es la lista de paginas del capitulo
-        writeMessage("INFO: paginas"+str(mylist),1)
-        for page in mylist:
-            writeMessage('INFO: Descargando Capitulo: '+title+', pagina: '+ str(page),1)
-            driver.get('https://manga-mx.com/manga/nanatsu-no-taizai/'+str(num)+'/p'+str(page))
-            try:
-                WebDriverWait(driver, 25).until(EC.visibility_of_element_located((By.ID, "m_img")))
-            except:
-                writeMessage('ERROR: capitulo: '+title+', pagina: '+ str(page),2)
-                pass
-            #waits till the element with the specific id appears
-            src = driver.page_source # gets the html source of the page
-            #print src
-            parser = BeautifulSoup(src,"lxml") # initialize the parser and parse the source "src"
-            list_of_attributes = {"id" : "m_img"} # A list of attributes that you want to check in a tag
-            tag = parser.findAll('img',attrs=list_of_attributes) # Get the video tag from the source
+                # mylist es la lista de paginas del capitulo
+                writeMessage("INFO: paginas" + str(mylist), 1)
+                for page in mylist:
+                    writeMessage('INFO: Descargando Capitulo: ' + title + ', pagina: ' + str(page), 1)
+                    driver.get('https://manga-mx.com/manga/nanatsu-no-taizai/' + str(num) + '/p' + str(page))
+                    try:
+                        WebDriverWait(driver, 25).until(EC.visibility_of_element_located((By.ID, "m_img")))
+                        # waits till the element with the specific id appears
+                        src = driver.page_source  # gets the html source of the page
+                        # print src
+                        parser = BeautifulSoup(src, "lxml")  # initialize the parser and parse the source "src"
+                        list_of_attributes = {"id": "m_img"}  # A list of attributes that you want to check in a tag
+                        tag = parser.findAll('img', attrs=list_of_attributes)  # Get the video tag from the source
 
-            n = 0 # Specify the index of video element in the web page
-            url = tag[n]['src'] # get the src attribute of the video
-            if "http" not in url :
-                    url = "http:"+url
-            try:
-                r = requests.get(url, stream=True, headers={'User-agent': user_agent,'Connection': 'keep-alive'})
-                if r.status_code == 200:
-                    directory = "nanatsu/"+title
-                    if not os.path.exists(directory):
-                        os.makedirs(directory)
-                        writeMessage('INFO: Creando carpeta: '+ directory,1)
-                    with open(directory+"/"+str(page)+".jpg", 'wb') as f:
-                        r.raw.decode_content = True
-                        shutil.copyfileobj(r.raw, f)
-                #del r
-            except Exception as exc:
-                writeMessage('ERROR: URL con problemas: '+ str(url),2)
-                writeMessage('ERROR: Error en la descarga del capitulo: '+title+', en la pagina: '+str(page)+"\n desc: "+ str(exc),2)
-                pass
+                        n = 0  # Specify the index of video element in the web page
+                        url = tag[n]['src']  # get the src attribute of the video
+                        if "http" not in url:
+                            url = "http:" + url
+                        try:
+                            r = requests.get(url, stream=True,
+                                             headers={'User-agent': user_agent, 'Connection': 'keep-alive'})
+                            if r.status_code == 200:
+                                directory = "nanatsu/" + title
+                                if not os.path.exists(directory):
+                                    os.makedirs(directory)
+                                    writeMessage('INFO: Creando carpeta: ' + directory, 1)
+                                groups = re.search('.*?\/\d+\/.*\.([a-zA-Z]{3,3})\?\d+', url)
+                                if groups:
+                                    fname = str(page) + "." + str(groups.group(1))
+                                else:
+                                    fname = str(page) + ".jpg"
+                                with open(directory + "/" + fname, 'wb') as f:
+                                    r.raw.decode_content = True
+                                    shutil.copyfileobj(r.raw, f)
+                        except Exception as exc:
+                            writeMessage('ERROR: URL con problemas: ' + str(url), 2)
+                            writeMessage(
+                                'ERROR: Error en la descarga del capitulo: ' + title + ', en la pagina: ' + str(
+                                    page) + "\n desc: " + str(exc), 2)
+                            pass
+                    except Exception as exx:
+                        writeMessage('ERROR: capitulo: ' + title + ', pagina: ' + str(page), 2)
+                        writeMessage(str(exx), 2)
+                        pass
 
-        writeMessage("INFO: Capitulo: "+title+", id: "+str(num)+"Descargado completamente",1)
-        descargados.write(str(num)+"\n")
-        driver.quit()
+                writeMessage("INFO: Capitulo: " + title + ", id: " + str(num) + "Descargado completamente", 1)
+                descargados.write(str(num) + "\n")
+                driver.quit()
+        except:
+            pass
+
     logs.close()
     error_logs.close()
     descargados.close()
 except Exception as e:
-    writeMessage('ERROR: Error en el proceso: '+ str(e),2)
-    logs.close()
-    error_logs.close()
-    descargados.close()
+    writeMessage('ERROR: Error en el proceso de descarga del capitulo: ' + str() + str(e), 2)
+    pass
+logs.close()
+error_logs.close()
+descargados.close()

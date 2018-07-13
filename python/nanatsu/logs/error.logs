@@ -1,0 +1,74 @@
+ERROR: Error en el proceso: Message: unknown error: Chrome failed to start: exited abnormally
+  (Driver info: chromedriver=2.40.565383 (76257d1ab79276b2d53ee976b2c3e3b9f335cde7),platform=Linux 4.15.0-24-generic x86_64)
+
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1459/NanatsunoTaizai5502RHS.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 55, en la pagina: 1
+ desc: writeMessage() takes exactly 2 arguments (1 given)
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1459/NanatsunoTaizai5503RHS.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 55, en la pagina: 2
+ desc: writeMessage() takes exactly 2 arguments (1 given)
+ERROR: capitulo: Capítulo 55, pagina: 3
+ERROR: Error en el proceso: [Errno 104] Connection reset by peer
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1704/NanatsunoTaizai6206RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 62, en la pagina: 8
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1704/NanatsunoTaizai6213RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 62, en la pagina: 11
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1704/NanatsunoTaizai620809RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 62, en la pagina: 15
+ desc: Exceeded 30 redirects.
+ERROR: Error en el proceso: Message: 
+
+ERROR: Error en el proceso: Message: 
+
+ERROR: Error en el proceso de descarga del capitulo: Message: 
+
+ERROR: Error en el proceso de descarga del capitulo: Message: 
+
+ERROR: Error en el proceso de descarga del capitulo: Message: 
+
+ERROR: Error en el proceso de descarga del capitulo: Message: 
+
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1960/TheSevenDeadlySins7907RHN.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 79, en la pagina: 8
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1960/TheSevenDeadlySins7912RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 79, en la pagina: 13
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1960/TheSevenDeadlySins7913RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 79, en la pagina: 14
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1961/TheSevenDeadlySins8011RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 80, en la pagina: 12
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1961/TheSevenDeadlySins8012RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 80, en la pagina: 13
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1961/TheSevenDeadlySins8014RHN.png?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 80, en la pagina: 15
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1967/TheSevenDeadlySins8605RHN.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 86, en la pagina: 7
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/1970/TheSevenDeadlySins8921RHN.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 89, en la pagina: 22
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/2030/TheSevenDeadlySins9116RHN.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 91, en la pagina: 17
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/2366/21.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 124 — Lo que la amistad da a luz, en la pagina: 22
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/2371/20.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 129 — La tierra sagrada de los druidas, en la pagina: 19
+ desc: Exceeded 30 redirects.
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/2374/09.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 132 — Lo que nos falta, en la pagina: 10
+ desc: Exceeded 30 redirects.
+ERROR: capitulo: Capítulo 159 — No hay necesidad de palabras, pagina: 20
+Message: 
+
+ERROR: URL con problemas: http://manga-mx.com/archivos/manga/nanatsu-no-taizai/12326/4.jpg?62169958800
+ERROR: Error en la descarga del capitulo: Capítulo 242 — El final de los 7 pecados capitales, en la pagina: 4
+ desc: HTTPConnectionPool(host='manga-mx.com', port=80): Max retries exceeded with url: /archivos/manga/nanatsu-no-taizai/12326/4.jpg?62169958800 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x7fa7491c6c10>: Failed to establish a new connection: [Errno -3] Temporary failure in name resolution',))

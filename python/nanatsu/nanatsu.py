@@ -37,24 +37,31 @@ options.add_argument('user-agent='+user_agent)
 capitulos = OrderedDict(capitulos)
 #print capitulos
 
-logs = open("nanatsu/logs.txt","a+")
-descargados = open("nanatsu/downloaded.txt","a+")
+
+
+basedir = "nanatsu/"
+logs = open(basedir+"info.logs","a+")
+error_logs = open(basedir+"error.logs","a+")
+descargados = open(basedir+"downloaded.txt","a+")
 
 
 #Imprime en pantalla y escribe en el archivo logs
-def writeMessage(msg):
+def writeMessage(msg,level):
     print msg+"\n"
     try:
-        logs.write(msg+"\n")
+        if level == 1:
+            logs.write(msg+"\n")
+        else:
+            error_logs.write(msg+"\n")
     except Exception as e :
         print str(e)
 
 def checkIfDownloaded(num):
     try:
-        with open('nanatsu/downloaded.txt','r') as descargados:
+        with open(basedir+"/downloaded.txt",'r') as descargados:
             for cap in descargados:
                 if int(num) == int(cap):
-                    writeMessage("Capitulo ya descargado: "+str(num))
+                    writeMessage("INFO: Capitulo ya descargado: "+str(num),1)
                     return True 
         return False
     except Exception as e:
@@ -65,7 +72,7 @@ try:
     for num,title in capitulos.items():
         if checkIfDownloaded(num):
             continue
-        writeMessage('INFO: Descargando Capitulo: '+title)
+        writeMessage('INFO: Descargando Capitulo: '+title,1)
         driver = webdriver.Chrome(chrome_options=options)
         driver.get('https://manga-mx.com/manga/nanatsu-no-taizai/'+str(num)+'/p1')
         WebDriverWait(driver, 15).until(EC.visibility_of_element_located((By.ID, "m_img")))
@@ -85,14 +92,14 @@ try:
                 mylist.add(int(number))
 
         #mylist es la lista de paginas del capitulo
-        writeMessage("INFO: paginas"+str(mylist))
+        writeMessage("INFO: paginas"+str(mylist),1)
         for page in mylist:
-            writeMessage('INFO: Descargando Capitulo: '+title+', pagina: '+ str(page))
+            writeMessage('INFO: Descargando Capitulo: '+title+', pagina: '+ str(page),1)
             driver.get('https://manga-mx.com/manga/nanatsu-no-taizai/'+str(num)+'/p'+str(page))
             try:
                 WebDriverWait(driver, 25).until(EC.visibility_of_element_located((By.ID, "m_img")))
             except:
-                writeMessage('ERROR: capitulo: '+title+', pagina: '+ str(page))
+                writeMessage('ERROR: capitulo: '+title+', pagina: '+ str(page),2)
                 pass
             #waits till the element with the specific id appears
             src = driver.page_source # gets the html source of the page
@@ -111,21 +118,24 @@ try:
                     directory = "nanatsu/"+title
                     if not os.path.exists(directory):
                         os.makedirs(directory)
-                        writeMessage('INFO: Creando carpeta: '+ directory)
+                        writeMessage('INFO: Creando carpeta: '+ directory,1)
                     with open(directory+"/"+str(page)+".jpg", 'wb') as f:
                         r.raw.decode_content = True
                         shutil.copyfileobj(r.raw, f)
                 #del r
             except Exception as exc:
-                writeMessage('ERROR: URL con problemas: '+ str(url))
-                writeMessage('ERROR: Error en la descarga del capitulo'+title+'la pagina: '+str(page)+" desc: "+ str(exc))
+                writeMessage('ERROR: URL con problemas: '+ str(url),2)
+                writeMessage('ERROR: Error en la descarga del capitulo'+title+'la pagina: '+str(page)+" desc: "+ str(exc),2)
                 pass
 
-        writeMessage("INFO: Capitulo: "+title+", id: "+str(num)+"Descargado completamente")
+        writeMessage("INFO: Capitulo: "+title+", id: "+str(num)+"Descargado completamente",1)
         descargados.write(str(num)+"\n")
         driver.quit()
     logs.close()
+    error_logs.close()
+    descargados.close()
 except Exception as e:
-    writeMessage('ERROR: Error en el proceso: '+ str(e))
+    writeMessage('ERROR: Error en el proceso: '+ str(e),2)
     logs.close()
+    error_logs.close()
     descargados.close()
